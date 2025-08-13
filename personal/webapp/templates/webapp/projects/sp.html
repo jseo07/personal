@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>SP Development Web App</h1>
+    <p class="project-subtitle">
+      Company website (About • Blog • Contact) + Admin WMS map to select land in Korea, auto-fetch details (price, purpose, etc.) via API, and export as CSV/XLSX. <br>
+      * Live Demo of the map application is not available for non-admin users. <br>
+      * This is a website developed in Korean.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Full-stack Developer</span>
+      <span class="chip">Stack: Django, REST API</span>
+      <span class="chip">Exports: CSV/XLSX</span>
+      <span class="chip">Region: Korea</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio" aria-label="Back to Portfolio">← Back to Portfolio</a>
+      <!-- add links when ready -->
+      <a class="btn primary" href="https://spdevelopment-12af56922105.herokuapp.com/" target="_blank" rel="noopener">Live Demo</a>
+      <a class="btn" href="https://github.com/jseo07/MapInfoProject" target="_blank" rel="noopener">Code</a>
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        SP Development’s web presence includes a public site (About, Blog/Announcements, Contact) and a secure admin portal with a WMS-based map. 
+        Admin users draw or select land parcels anywhere in Korea; the system calls land information APIs to fetch up-to-date attributes 
+        (e.g., indicative price bands, land category/purpose) and compiles results into a clean dataset that can be exported as <strong>CSV</strong> or <strong>XLSX</strong>.
+      </p>
+      <p>
+        The blog lets staff publish client-facing updates; the contact page routes inquiries to the team with context. 
+        The mapping tool streamlines due-diligence by centralizing data collection into a single workflow.
+      </p>
+
+      <h3>Key Features</h3>
+      <ul class="feature-list">
+        <li>🏢 <strong>Public site:</strong> About page with company info and services.</li>
+        <li>📰 <strong>Blog/Announcements:</strong> Create, schedule, and publish updates for clients.</li>
+        <li>📮 <strong>Contact:</strong> Inquiry form with validation & email notifications.</li>
+        <li>🗺️ <strong>Admin WMS Map:</strong> Draw/select areas; fetch parcel attributes via API.</li>
+        <li>📊 <strong>Data summary:</strong> Price ranges, land usage, area totals per selection.</li>
+        <li>⬇️ <strong>Exports:</strong> One-click CSV/XLSX export for offline analysis.</li>
+        <li>🔐 <strong>Permissions:</strong> Admin-only access with role-based controls.</li>
+      </ul>
+    </div>
+
+    <div class="project-col">
+      <h2>My Contributions</h2>
+      <ul class="checklist">
+        <li>Designed Django models/views for pages, posts, and contact workflows.</li>
+        <li>Implemented a Leaflet-based map with draw/select tools and GeoJSON layers.</li>
+        <li>Integrated REST API calls to retrieve land attributes by selected geometry.</li>
+        <li>Built CSV/XLSX exports (streamed responses for large selections).</li>
+        <li>Set up admin permissions and basic audit logging.</li>
+      </ul>
+
+      <h3>Tech Notes</h3>
+      <div class="kv">
+        <div><span>Frontend</span><b>HTML/CSS, JS</b></div>
+        <div><span>Backend</span><b>Django</b></div>
+        <div><span>Data</span><b>GeoJSON, tabular exports (CSV/XLSX)</b></div>
+        <div><span>Integrations</span><b>Land info APIs (Korea)</b></div>
+      </div> 
+    </div>
+  </div>
+
+  <h2 class="gallery-title">Screenshots</h2>
+  <div class="project-gallery">
+    <figure class="shot">
+      <img src="{% static 'webapp/images/sp-home.png' %}" alt="SP Development website home">
+      <figcaption>Public site — home/about</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <img src="{% static 'webapp/images/sp-map.png' %}" alt="Admin WMS map selection">
+      <figcaption>Admin — WMS map with drawn selection</figcaption>
+    </figure>
+
+    <!-- Add more as you like -->
+  </div>
+</section>
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>Tetris Clone — Java (Console, OOP)</h1>
+    <p class="project-subtitle">
+      A console-playable Tetris built with clean object-oriented design: clear class boundaries, testable logic,
+      and small reusable components (factory, strategy, state). Focused on readability and maintainability.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Java Developer</span>
+      <span class="chip">Stack: Java • JUnit (tests)</span>
+      <span class="chip">Interface: Console (ASCII)</span>
+      <span class="chip">Paradigm: OOP + Design Patterns</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      <a class="btn primary" href="https://github.com/jseo07/Tetris" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <!-- LEFT -->
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        This Tetris clone runs entirely in the console with an update loop that processes input, applies gravity,
+        checks collisions/line clears, updates score & level, and renders the board as ASCII. The codebase is structured
+        around small, single-responsibility classes to keep logic testable and modular.
+      </p>
+
+      <h3>Core Features</h3>
+      <ul class="feature-list">
+        <li>Seven distinct tetrominoes (I, O, T, S, Z, J, L) with rotation & wall-kicks.</li>
+        <li>Soft drop / hard drop, hold (optional), and next-queue preview.</li>
+        <li>Line clear detection (single/double/triple/Tetris) with classic scoring & level-up pacing.</li>
+        <li>7-bag randomizer for fair piece distribution (seedable for tests).</li>
+        <li>Pause / resume; top-out detection; high-score persistence (optional).</li>
+      </ul>
+
+      <h3>Controls (Console)</h3>
+      <ul class="feature-list">
+        <li><code>← / →</code> move left/right</li>
+        <li><code>↑</code> rotate (clockwise), <code>Z</code> rotate (counter-clockwise)</li>
+        <li><code>↓</code> soft drop, <code>Space</code> hard drop</li>
+        <li><code>P</code> pause/resume, <code>Q</code> quit</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="project-col">
+      <h2>Object-Oriented Design</h2>
+      <ul class="checklist">
+        <li><strong>Game</strong>: main loop (input → update → render), tick timing, state transitions.</li>
+        <li><strong>Board</strong>: grid state, collision checks, line-clear detection & compaction.</li>
+        <li><strong>Tetromino</strong> (entity) + <strong>Shape</strong>/<strong>Rotation</strong> utilities.</li>
+        <li><strong>PieceFactory</strong>: creates pieces via 7-bag <em>Randomizer</em>.</li>
+        <li><strong>InputHandler</strong>: maps keys to commands (debounce/repeat).</li>
+        <li><strong>Renderer</strong> (console): draws board & HUD using ASCII.</li>
+        <li><strong>ScoreManager</strong> / <strong>LevelManager</strong>: scoring, gravity speed, level rules.</li>
+        <li><strong>GameState</strong>: Running • Paused • GameOver (state pattern).</li>
+      </ul>
+
+      <h3>Patterns Applied</h3>
+      <ul class="feature-list">
+        <li><strong>Factory</strong> — central piece creation with a 7-bag source.</li>
+        <li><strong>Strategy</strong> — rotation/wall-kick rules swappable (e.g., basic vs. SRS-like).</li>
+        <li><strong>State</strong> — game states encapsulate allowed actions & rendering.</li>
+        <li><strong>Command</strong> — input → discrete commands for testable moves.</li>
+        <li><strong>Observer</strong> (optional) — events for line clears / score updates.</li>
+      </ul>
+
+      <h3>Testing</h3>
+      <ul class="feature-list">
+        <li>Unit tests for collision, rotation/wall-kicks, line clears, scoring, and randomizer fairness.</li>
+        <li>Seeded 7-bag to reproduce scenarios; deterministic step-through of the game loop.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

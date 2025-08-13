@@ -1,0 +1,21 @@
+{% load static %}
+
+<a class="pf-card" href="{{ href }}" aria-label="{{ title }}">
+  <figure class="pf-figure" aria-hidden="true">
+    <img src="{{ image }}" alt="{{ title }}">
+
+    <!-- Hover overlay with hashtags -->
+    <div class="pf-hover">
+      <ul class="pf-tags">
+        {% if tag1 %}<li>#{{ tag1 }}</li>{% endif %}
+        {% if tag2 %}<li>#{{ tag2 }}</li>{% endif %}
+        {% if tag3 %}<li>#{{ tag3 }}</li>{% endif %}
+      </ul>
+    </div>
+
+    <!-- Bottom title bar (always visible) -->
+    <figcaption class="pf-footer">
+      <span class="pf-title">{{ title }}</span>
+    </figcaption>
+  </figure>
+</a>

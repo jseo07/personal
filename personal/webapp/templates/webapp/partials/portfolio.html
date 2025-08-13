@@ -1,0 +1,49 @@
+{% load static %}
+<section id="portfolio" class="snap-section">
+  <div class="section portfolio-section">
+    <div class="portfolio-inner">
+        <h2 class="portfolio-title">Portfolio</h2>
+            <div class="portfolio-grid">
+                {% static 'webapp/images/sp-map.png' as project1 %}
+                {% static 'webapp/images/smartmove-homepage.png' as project2 %}
+                {% static 'webapp/images/gan-image1.png' as project3 %}
+                {% static 'webapp/images/lstm.png' as project4 %}
+                {% static 'webapp/images/gamer.png' as project5 %}
+                {% static 'webapp/images/tetris.jpg' as project6 %}
+                {% static 'webapp/images/llm.png' as project7 %}
+                {% url 'sp' as sp %}
+                {% url 'smartmove' as smartmove %}
+                {% url 'gan' as gan %}
+                {% url 'llm' as llm %}
+                {% url 'lstm' as lstm %}
+                {% url 'knn' as knn %}
+                {% url 'tetris' as tetris %}
+            {% include "webapp/partials/portfolio_card.html" with href=sp image=project1 title="SP Development WMS based Web App" tag1="Python" tag2="Django" tag3="Data Extraction"%}
+
+            {% include "webapp/partials/portfolio_card.html" with href=smartmove image=project2 title="smartmovebc.ca Web App " tag1="Python" tag2="Django" tag3="Web Dev"%}
+
+            {% include "webapp/partials/portfolio_card.html" with href=gan image=project3 title="GAN Facial Composites (Research)" tag1="Python" tag2="Torch" tag3="Neural Network"%}
+
+            {% include "webapp/partials/portfolio_card.html" with href=llm image=project7 title="LLM Classification TF-IDF" tag1="Python" tag2="LLM" tag3="Kaggle"%}
+            
+            {% include "webapp/partials/portfolio_card.html" with href=lstm image=project4 title="Dividend Forecasting LSTM" tag1="Python" tag2="Tensorflow" tag3="Time-series"%}
+
+            {% include "webapp/partials/portfolio_card.html" with href=knn image=project5 title="Newsletter Subscription prediction with K-NN Classification" tag1="R" tag2="Data Analysis" %}
+
+            {% include "webapp/partials/portfolio_card.html" with href=tetris image=project6 title="Multiplayer Tetris Clone in Java" tag1="Java" tag2="Game" tag3="OOP"%}
+            
+        </div>
+    </div>
+    <div class="welcome-links">
+            <a href="#contact" aria-label="Scroll to Contact Section">
+                <span class="arrow-label">Contact</span>
+                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </a>
+        </div>
+  </div>
+  
+
+  <div class="snap-end" aria-hidden="true"></div>
+</section>

@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+  <title>{% block title %}Hi, I'm Jangwon.{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  {% include 'partials/navbar.html' %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  
+  {% include 'partials/footer.html' %}
+  <!-- Global JavaScript -->
+  <script>
+    // Show navbar when NOT on the hero section
+    (function() {
+      const navbar = document.querySelector('.navbar');
+      const hero = document.querySelector('#hero');
+      if (!navbar || !hero) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          // If hero is intersecting (on top section), hide navbar; else show it
+          if (entry.isIntersecting) {
+            navbar.classList.remove('navbar--visible');
+          } else {
+            navbar.classList.add('navbar--visible');
+          }
+        },
+        {
+          root: null,
+          threshold: 0.6   // hero considered "visible" if >=60% on screen
+        }
+      );
+
+      observer.observe(hero);
+
+      // Edge case: if user refreshes mid-page, set initial state
+      window.addEventListener('load', () => {
+        const rect = hero.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const visibleRatio = Math.max(0, Math.min(1, (vh - Math.max(0, rect.top)) / rect.height));
+        if (visibleRatio < 0.6) navbar.classList.add('navbar--visible');
+      });
+    })();
+  </script>
+
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>

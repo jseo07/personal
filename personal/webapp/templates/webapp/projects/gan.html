@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}
+
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>Interactive GAN Facial Composite</h1>
+    <p class="project-subtitle">
+      Iterative, user-in-the-loop system: a pretrained GAN samples faces around a seed;
+      the user rates similarity to a person in mind; ratings are used to update the seed in latent space,
+      converging toward the target appearance. Built at the <strong>MISE Research Camp</strong> and
+      submitted to the <strong>International Science & Engineering Fair (ISEF)</strong>. <br>
+      * This research was done under the guidance and supervision of <a href="https://www.linkedin.com/in/karan-grewal-b91077bb/">Karan Grewal</a>.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Research & Engineering</span>
+      <span class="chip">Stack: Python, PyTorch, NumPy</span>
+      <span class="chip">Model: Pretrained GAN</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      <a class="btn primary" href="https://colab.research.google.com/drive/1pYypjc6da_08OB29bEyjSpSlekgJiZrD?usp=sharing" target="_blank" rel="noopener">Live Demo</a>
+      <a class="btn" href="{% static 'webapp/files/gan_facial_composite_report.pdf' %}" download="gan_facial_composite_report.pdf">Paper</a>
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        The system starts from a latent seed <em>z</em>. Each iteration, we sample noisy variants
+        around <em>z</em> and generate candidate faces. The user rates each candidate for resemblance.
+        Those ratings become supervision to solve for a direction in latent space that increases
+        resemblance, and we update <em>z</em> accordingly. Repeating this loop steers the GAN toward
+        an image that better matches the person the user has in mind—an approach designed for
+        <strong>facial composite</strong> creation.
+      </p>
+
+      <h3>Key Features</h3>
+      <ul class="feature-list">
+        <li>🧠 <strong>User-guided optimization:</strong> Ratings drive latent updates toward the target.</li>
+        <li>🎲 <strong>Seed + noise sampling:</strong> Diverse candidates around the current best.</li>
+        <li>⚙️ <strong>Latent update:</strong> Rating-weighted solve for direction; step-size scheduling.</li>
+      </ul>
+
+      <h3>Potential Impact</h3>
+      <p>
+        Assists witnesses and investigators by gradually converging on a useful facial composite
+        without requiring drawing skills—interactive, fast, and repeatable.
+      </p>
+    </div>
+
+    <div class="project-col">
+      <h2>My Contributions</h2>
+      <ul class="checklist">
+        <li>Prototyped the end-to-end loop: sampling, rating UI, latent updates, and convergence logic.</li>
+        <li>Implemented rating aggregation and a robust update step (regularized, step-size control).</li>
+        <li>Built iteration dashboards (seed preview, candidate grid, rating summaries).</li>
+        <li>Prepared research materials for MISE and ISEF submission (method, results, limitations).</li>
+      </ul>
+
+      <h3>Tech Notes</h3>
+      <div class="kv">
+        <div><span>Framework</span><b>PyTorch • NumPy</b></div>
+        <div><span>Data Flow</span><b>Seed <em>z</em> → noise → GAN → ratings → update <em>z</em></b></div>
+        <div><span>Latency</span><b>Batch inference; no-grad generation</b></div>
+        <div><span>Exports</span><b>Best image, iteration snapshots</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="gallery-title">Workflow</h2>
+  <ol class="process">
+    <li class="step">
+      <span class="step-num">1</span>
+      <div class="step-body">
+        <h4>Seed & Sampling</h4>
+        <p>Pick seed <em>z</em>; sample <em>z + ε</em> (noise) to get a batch of candidate faces.</p>
+      </div>
+    </li>
+    <li class="step">
+      <span class="step-num">2</span>
+      <div class="step-body">
+        <h4>User Ratings</h4>
+        <p>User scores resemblance for each candidate (e.g., 0–5). Ratings form weak labels.</p>
+        <div class="rating-chips">
+          <span class="rchip">⭐ 5</span>
+          <span class="rchip">⭐ 3</span>
+          <span class="rchip">⭐ 1</span>
+        </div>
+      </div>
+    </li>
+    <li class="step">
+      <span class="step-num">3</span>
+      <div class="step-body">
+        <h4>Latent Update</h4>
+        <p>
+          Solve for a direction in latent space correlated with higher ratings (regularized);
+          update <em>z</em> with a scheduled step size.
+        </p>
+      </div>
+    </li>
+    <li class="step">
+      <span class="step-num">4</span>
+      <div class="step-body">
+        <h4>Repeat & Converge</h4>
+        <p>Iterate until resemblance plateaus; export best image and iteration history.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="gallery-title">Future Work (In Progress)</h2>
+  <ul class="feature-list">
+    <li>🧩 <strong>Train a custom GAN:</strong> Tailored dataset & latent prior to improve identity control.</li>
+    <li>🗣️ <strong>LLM pre-prompting:</strong> Users describe high-level traits; system initializes seed and sampling
+      to match those traits so the <em>first</em> iteration starts closer to target.</li>
+    <li>🛡️ <strong>Safeguards & bias checks:</strong> Monitor for mode collapse, artifacts, and demographic biases.</li>
+  </ul>
+
+  <h2 class="gallery-title">Screenshots</h2>
+  <div class="project-gallery">
+    <figure class="shot">
+      <img src="{% static 'webapp/images/gan-image1.png' %}" alt="Candidate grid with user ratings">
+      <figcaption>Iterations with different target traits</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="{% static 'webapp/images/gan-image2.png' %}" alt="Candidate grid with user ratings">
+      <figcaption>Iterations with 1 fixed target face</figcaption>
+    </figure>
+
+    <!-- Add more when ready -->
+    <!--
+    <figure class="shot">
+      <img src="{% static 'webapp/images/gan-iteration.png' %}" alt="Latent update progress">
+      <figcaption>Latent update & progress over iterations</figcaption>
+    </figure>
+    -->
+  </div>
+</section>
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

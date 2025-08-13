@@ -1,0 +1,145 @@
+:root {
+  --bg-extend: 20vh; /* how far hero spills into next section */
+}
+
+/* keep your existing hero markup: <section class="hero-section snap-section"> */
+.hero-section { position: relative; z-index: 0; }
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  height: calc(100dvh + var(--bg-extend));
+  /* bright, subtle “data-y” gradient */
+  background:
+    radial-gradient(900px 600px at 80% 35%, rgba(0,115,230,0.10), rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, #ffffff 0%, #f7fbff 60%, #eef5ff 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Optional: a super-subtle dot grid for a data vibe */
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  height: calc(100dvh + var(--bg-extend));
+  background-image: radial-gradient(#e6eef9 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.35;              /* keep it faint so text stays crisp */
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.welcome-name {
+  font-size: clamp(5rem, 6vw, 7rem); /* responsive scaling */
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.welcome-description {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  color: #555;
+  margin-top: 1rem;
+}
+
+.welcome-socials {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  gap: 2rem;            /* space between icons */
+  align-items: center;    /* center icons horizontally in the column */
+}
+
+.welcome-socials a {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  color: #0073e6;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.welcome-socials svg {
+  width: 100%;
+  height: 100%;
+}
+
+.welcome-socials a:hover {
+  transform: scale(1.15);
+  color: black; /* hover color */
+}
+
+
+
+.welcome-links {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3rem;
+  text-align: center;
+}
+.welcome-links a {
+  color: #0073e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounce 1.5s infinite;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+/* Stagger animation delay for each arrow */
+.welcome-links a:nth-child(2) { animation-delay: 0.2s; }
+.welcome-links a:nth-child(3) { animation-delay: 0.4s; }
+
+/* Hover: stop bounce animation */
+.welcome-links a:hover {
+  color: black;
+  animation-play-state: paused;
+}
+
+.arrow-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.arrow {
+  width: 36px;
+  height: 36px;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(8px); }
+  60% { transform: translateY(4px); }
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 768px) {
+  .welcome-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .welcome-socials {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .hero-section::before {
+  height: calc(100dvh);
+  }
+}
+

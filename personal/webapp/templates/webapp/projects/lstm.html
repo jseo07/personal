@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>Dividend Prediction with LSTM</h1>
+    <p class="project-subtitle">
+      Forecasting future dividends using a sequence model (LSTM) on historical market data.
+      Emphasis on clean preprocessing and time-aware evaluation.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Data Scientist</span>
+      <span class="chip">Stack: Python, pandas, NumPy, TensorFlow/Keras</span>
+      <span class="chip">Source: yfinance</span>
+      <span class="chip">Task: Time-series regression</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      <a class="btn primary" href="https://www.kaggle.com/code/jseo079/dividend-prediction-with-lstm" target="_blank" rel="noopener">
+        View Kaggle Notebook
+      </a>
+      <!-- Optional paper export (if you add the PDF to /static/) -->
+      <!-- <a class="btn" href="{% static 'webapp/ProjectReport.pdf' %}" download="Dividend_LSTM_Report.pdf">Paper</a> -->
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <!-- LEFT -->
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        Built an end-to-end pipeline that fetches market data, prepares supervised sequences, and trains an LSTM to
+        predict upcoming dividend values. The focus was on reliable preprocessing and honest, time-respecting validation.
+      </p>
+
+      <h3>Data Cleaning</h3>
+      <ul class="clean-list">
+        <li>Loaded price/dividend data with <code>yfinance</code>; unified to a single datetime index.</li>
+        <li>Handled missing values and ensured the series were sorted and aligned by date.</li>
+        <li>Constructed the target dividend series and filtered to the relevant ticker/time span.</li>
+      </ul>
+
+      <h3>Exploratory Analysis</h3>
+      <ul class="feature-list">
+        <li>Plotted dividend history and matching price series to understand payout patterns.</li>
+        <li>Reviewed basic descriptive statistics and missing-value patterns.</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="project-col">
+      <h2>Modeling</h2>
+      <ul class="checklist">
+        <li>Framed the problem as supervised sequences (look-back window → next dividend value).</li>
+        <li>Created training samples by sliding windows over the historical series.</li>
+        <li>Split data by time (train → validation/test) with no shuffling.</li>
+        <li>Implemented an LSTM in Keras and trained on the prepared sequences.</li>
+        <li>Evaluated on a held-out time segment and visualized predictions vs actuals.</li>
+      </ul>
+
+      <h3>What I Focused On</h3>
+      <div class="kv">
+        <div><span>Reliability</span><b>Clean alignment and consistent indexing</b></div>
+        <div><span>Reproducibility</span><b>Deterministic splits and saved seeds</b></div>
+        <div><span>Readability</span><b>Clear plots comparing predicted vs. true dividends</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="gallery-title">Screenshots</h2>
+  <div class="project-gallery">
+    <figure class="shot">
+      <img src="{% static 'webapp/images/lstm.png' %}" alt="LSTM predictions vs actual dividends">
+      <figcaption>Predictions vs. actual dividends over time</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="{% static 'webapp/images/lstm2.png' %}" alt="LSTM predictions vs actual dividends">
+      <figcaption>Historical and Predicted Dividends of MSFT</figcaption>
+    </figure>
+  </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

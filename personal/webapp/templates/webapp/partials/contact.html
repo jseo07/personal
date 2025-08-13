@@ -1,0 +1,46 @@
+{% load static %}
+<section id="contact" class="snap-section">
+  <div class="section contact-section">
+    <!-- Reuse the same two-column grid style as About -->
+     <div class="contact-inner">
+    <div class="contact-grid">
+        
+      <!-- Left: big icon -->
+      <div class="contact-visual">
+        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M20 4H4a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-1.4 3L12 11.76 5.4 7h13.2ZM4 18a1 1 0 0 1-1-1V8.2l8.5 5.67a1 1 0 0 0 1.1 0L21 8.2V17a1 1 0 0 1-1 1H4Z"/>
+        </svg>
+        <p class="contact-note">Questions, collaborations, or opportunities — I’d love to hear from you.</p>
+      </div>
+
+      <!-- Right: form -->
+      <div class="contact-form">
+        <h2 class="contact-title"><span class="icon">✉️</span> Contact</h2>
+        <form method="post" action="{% url 'contact' %}">
+          {% csrf_token %}
+          <label class="field">
+            <span class="field-label">Your Email</span>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Message</span>
+            <textarea name="message" rows="6" placeholder="Tell me a bit about your project…" required></textarea>
+          </label>
+          {% if messages %}
+            <ul class="contact__success_list">
+              {% for msg in messages %}
+                <li class="contact__success_message">{{ msg }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          <button type="submit" class="contact-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- bottom snap target so users can fully scroll this section on mobile -->
+  <div class="snap-end" aria-hidden="true"></div>
+</section>

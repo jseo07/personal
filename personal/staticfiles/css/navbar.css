@@ -1,0 +1,122 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar Container */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0; right: 0;
+  height: 120px;
+  padding: max(8px, env(safe-area-inset-top)) 2rem 8px;
+  z-index: 1000;
+
+  /* slide behavior (your existing) */
+  transform: translateY(-200%);
+  transition: transform 280ms ease;
+  will-change: transform;
+  pointer-events: none;
+
+  /* fade-to-transparent background */
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,1) 60%,
+    rgba(255,255,255,0) 100%
+  );
+  /* optional: remove any border if you had one */
+  border-bottom: none;
+}
+
+.navbar.navbar--visible {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Logo Section - Left */
+.logo {
+  font-size: 1.8rem; /* larger than menu */
+  font-weight: bold;
+  line-height: 1.2;
+  padding-left: 1rem;
+  margin-top: 1rem;
+}
+
+.logo a{
+  color: black;
+}
+.logo a:hover{
+  color: #0073e6;
+}
+.navbar-menu {
+  align-self: flex-start; /* pins the menu to the top of the bar */
+}
+
+/* Menu Section - Right */
+.navbar-menu ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem; /* space between menu items */
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 0.5rem 0;
+}
+
+/* Hover Effect - Bulging Out */
+.navbar-menu a:hover {
+  transform: scale(1.1);
+  color: #0073e6;
+}
+
+/* Hamburger Menu (Hidden on Desktop) */
+.navbar-toggle {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+  .navbar-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: white;
+    width: 200px;
+    border-left: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .navbar-menu ul {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+  
+}

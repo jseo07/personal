@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>SmartMove Electrical — smartmovebc.ca</h1>
+    <p class="project-subtitle">
+      Public website for Smartmove Electrical and Automation - a Vancouver, BC electrician: About, Services with detailed pages, and Contact.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Full-stack Developer</span>
+      <span class="chip">Stack: Django, HTML/CSS/JS</span>
+      <span class="chip">Focus: Services + Contact</span>
+      <span class="chip">Region: Vancouver, BC</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio" aria-label="Back to Portfolio">← Back to Portfolio</a>
+      
+      <a class="btn primary" href="https://smartmovebc.ca" target="_blank" rel="noopener">Visit site</a>
+      <a class="btn" href="https://github.com/jseo07/client-webapp-2025" target="_blank" rel="noopener">Code</a>
+      
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        SmartMove Electrical’s site organizes everything a business owner needs in a website:
+        a clear <strong>About</strong> page, a browsable <strong>Services</strong> catalog with
+        detail pages, and a streamlined <strong>Contact</strong> page.
+        The structure prioritizes conversion (clear CTAs) and trust (partnerships).
+      </p>
+
+      <h3>Key Features</h3>
+      <ul class="feature-list">
+        <li>👷 <strong>About:</strong> Company story, company partnerships, team highlights, service area.</li>
+        <li>🛠️ <strong>Services index:</strong> Scannable list of offerings.</li>
+        <li>📄 <strong>Service detail pages:</strong> Scope, process, gallery, “Get a quote” CTA.</li>
+        <li>📬 <strong>Contact:</strong> Contact form submission.</li>
+      </ul>
+    </div>
+
+    <div class="project-col">
+      <h2>My Contributions</h2>
+      <ul class="checklist">
+        <li>Modeled Services in Django.</li>
+        <li>Built responsive templates & components for service cards and details.</li>
+        <li>Implemented Contact form with email notifications.</li>
+      </ul>
+
+      <h3>Tech Notes</h3>
+      <div class="kv">
+        <div><span>Frontend</span><b>HTML/CSS, vanilla JS</b></div>
+        <div><span>Backend</span><b>Django</b></div>
+        <div><span>Content</span><b>About, Services, Contact</b></div>
+        <div><span>Integrations</span><b>Email (contact)</b></div>
+      </div>
+    </div>
+  </div>
+  <h2 class="gallery-title">Screenshots</h2>
+  <div class="project-gallery">
+    <figure class="shot">
+      <img src="{% static 'webapp/images/smartmove-homepage.png' %}" alt="SmartMove home/about page">
+      <figcaption>Public site — home/about</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="{% static 'webapp/images/smartmove-service.png' %}" alt="SmartMove service description page">
+      <figcaption>Public site — home/about</figcaption>
+    </figure>
+
+    <!-- Add service & contact screenshots when ready -->
+    <!--
+    <figure class="shot">
+      <img src="{% static 'webapp/images/smartmove-services.png' %}" alt="SmartMove services list">
+      <figcaption>Services — list & categories</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <img src="{% static 'webapp/images/smartmove-contact.png' %}" alt="SmartMove contact form">
+      <figcaption>Contact — quote request form</figcaption>
+    </figure>
+    -->
+  </div>
+</section>
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

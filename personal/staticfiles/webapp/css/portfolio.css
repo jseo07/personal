@@ -1,0 +1,227 @@
+:root{
+  --pf-gap: clamp(1rem, 2.5vw, 2rem);
+  --pf-shadow: 0 10px 30px rgba(0,0,0,.06);
+  --pf-shadow-hover: 0 16px 40px rgba(0,0,0,.10);
+  --nav-h: 104px;
+}
+
+/* Make this section a flex column that spans the viewport */
+#portfolio .portfolio-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;                /* full viewport height (mobile-safe) */
+  padding: calc(var(--nav-h) + 16px) 1.25rem 3rem; /* avoid navbar overlap */
+  align-items: center;                /* horizontal centering */
+  justify-content: flex-start;        /* main-axis starts at top */
+}
+
+/* This centers when there is space, but if content is taller than the viewport,
+   the auto margins resolve to 0 and the block naturally top-aligns (no overflow above). */
+#portfolio .portfolio-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin-block: auto;                 /* center vertically when possible, else top */
+}
+
+/* Title + grid as before */
+#portfolio .portfolio-title {
+  text-align: center;
+  margin: 0 0 1.75rem 0;
+}
+
+#portfolio .portfolio-grid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+/* Safety: if a global .section centers vertically, override it here */
+#portfolio .section {
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+
+.section.portfolio-section {
+  display: flex;           /* override any global grid/row flex */
+  flex-direction: column;  /* title on top, grid below */
+  align-items: stretch;    /* let grid take full width */
+}
+
+.portfolio-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.25rem;
+}
+
+.portfolio-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+    align-self: center;                  /* centers the h2 block */
+  text-align: center;
+  margin: 0 0 3rem 0;                  /* space under the title */
+  width: 100%;                         /* ensure full row if needed */
+
+}
+
+.portfolio-grid {
+  display: grid;
+  gap: var(--pf-gap);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Rectangular card (no radius) */
+.pf-card {
+  display: block;
+  border-radius: 0;                  /* <— rectangular */
+  box-shadow: var(--pf-shadow);
+  overflow: hidden;
+  background: #f7f7f7;
+  transition: transform .18s ease, box-shadow .25s ease;
+  will-change: transform;
+}
+
+.pf-card:focus-visible {
+  outline: 2px solid #0073e6;
+  outline-offset: 3px;
+}
+
+.pf-figure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 10;             /* consistent height */
+  background: #eee;
+}
+
+.pf-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform .35s ease, filter .25s ease;
+  display: block;
+}
+
+/* Bottom title bar (always visible) */
+.pf-footer {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: .75rem 1rem;
+}
+
+.pf-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #111;                       /* keep black text per your theme */
+  display: block;
+  text-align: center;
+}
+
+/* Hover overlay with tags (hidden by default) */
+.pf-hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  background: rgba(255,255,255,0.88); /* bright overlay for black text */
+  backdrop-filter: blur(2px);         /* optional; safe to keep */
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+.pf-tags {
+  display: flex;
+  gap: .5rem .75rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pf-tags li {
+  font-size: .9rem;
+  font-weight: 600;
+  color: #111;
+  background: #e9eef6;               /* soft gray/blue chip */
+  border: 1px solid #d8e0ec;
+  padding: .35rem .6rem;
+  border-radius: 999px;               /* pill */
+}
+
+/* Interactions */
+.pf-card:hover,
+.pf-card:focus-visible {
+  box-shadow: var(--pf-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.pf-card:hover img,
+.pf-card:focus-visible img {
+  transform: scale(1.06);             /* magnify image */
+  filter: saturate(0.95) brightness(1.02);
+}
+
+.pf-card:hover .pf-hover,
+.pf-card:focus-visible .pf-hover {
+  opacity: 1;                          /* show tags on hover/focus */
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .portfolio-section { padding: 3rem 1rem; }
+  .portfolio-title { margin-bottom: 1.25rem; }
+  .pf-tags li { font-size: .85rem; }
+}
+
+@media (max-width: 800px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200, 1fr));
+        padding: 2rem;
+        }
+
+}
+
+/* ===== Cascade reveal for portfolio cards ===== */
+.portfolio-grid {
+  --stagger: 90ms;                 /* gap between each card’s start time */
+}
+
+/* start hidden */
+.pf-card {
+  opacity: 0;
+  transform: translateY(14px) scale(.98);
+  will-change: opacity, transform;
+}
+
+/* animate in once the grid becomes visible */
+.portfolio-grid.is-visible .pf-card {
+  animation: pf-cascade .6s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+/* stagger the delays via nth-child (cover first 12; you have 7) */
+.portfolio-grid.is-visible .pf-card:nth-child(1)  { animation-delay: calc(var(--stagger) * 0); }
+.portfolio-grid.is-visible .pf-card:nth-child(2)  { animation-delay: calc(var(--stagger) * 1); }
+.portfolio-grid.is-visible .pf-card:nth-child(3)  { animation-delay: calc(var(--stagger) * 2); }
+.portfolio-grid.is-visible .pf-card:nth-child(4)  { animation-delay: calc(var(--stagger) * 3); }
+.portfolio-grid.is-visible .pf-card:nth-child(5)  { animation-delay: calc(var(--stagger) * 4); }
+.portfolio-grid.is-visible .pf-card:nth-child(6)  { animation-delay: calc(var(--stagger) * 5); }
+.portfolio-grid.is-visible .pf-card:nth-child(7)  { animation-delay: calc(var(--stagger) * 6); }
+.portfolio-grid.is-visible .pf-card:nth-child(8)  { animation-delay: calc(var(--stagger) * 7); }
+.portfolio-grid.is-visible .pf-card:nth-child(9)  { animation-delay: calc(var(--stagger) * 8); }
+.portfolio-grid.is-visible .pf-card:nth-child(10) { animation-delay: calc(var(--stagger) * 9); }
+.portfolio-grid.is-visible .pf-card:nth-child(11) { animation-delay: calc(var(--stagger) * 10); }
+.portfolio-grid.is-visible .pf-card:nth-child(12) { animation-delay: calc(var(--stagger) * 11); }
+
+@keyframes pf-cascade {
+  to { opacity: 1; transform: none; }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .pf-card { opacity: 1 !important; transform: none !important; animation: none !important; }
+}

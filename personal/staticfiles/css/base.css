@@ -1,0 +1,55 @@
+html {
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
+  color: #222;
+  line-height: 1.6;
+}
+
+:root {
+  --bg-tint: rgba(0,0,0,0.01);  /* overall dim */
+  --fade-start: 70%;            /* where the white fade begins */
+}
+
+html, body {
+  height: 100%;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+}
+
+.snap-section {
+  min-height: 100dvh;              /* better on mobile than 100vh */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;        /* snap when we hit a section */
+}
+
+
+/* the bottom snap target inside long sections */
+.snap-end {
+  block-size: 1px;                 /* tiny but snappable */
+  scroll-snap-align: end;          /* lets you snap to the bottom of the section */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #111;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #0073e6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #005bb5;
+}
+
+/* Make snapping less aggressive on small screens so users can finish the section comfortably */
+@media (max-width: 768px) {
+  html, body { scroll-snap-type: y proximity; }
+}

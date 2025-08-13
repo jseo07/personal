@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>PLAIcraft Newsletter Subscription — KNN Classification</h1>
+    <p class="project-subtitle">
+      UBC DSCI 100 group project predicting newsletter subscription from gameplay minutes and age.
+      Emphasis on careful data cleaning, simple EDA, and time-respecting evaluation.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Data Cleaning · EDA · Modeling</span>
+      <span class="chip">Stack: R (tidyverse, tidymodels)</span>
+      <span class="chip">Data: PLAIcraft players.csv</span>
+      <span class="chip">Task: Binary classification (K-NN)</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      {# Optional links if you host the report/notebook #}
+      {# <a class="btn primary" href="{% static 'webapp/files/dsci100-finalproject.html' %}" target="_blank" rel="noopener">View Notebook</a> #}
+      <a class="btn primary" href="{% static 'webapp/files/DSCI100_Report.pdf' %}" download="DSCI100_Report.pdf">Paper</a>
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <!-- LEFT -->
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        We trained a K-nearest neighbors classifier to predict whether a PLAIcraft player subscribed to the newsletter
+        using two predictors: minutes played and age. The project focused on transparent preprocessing and evaluation.
+      </p>
+
+      <h3>Data Cleaning</h3>
+      <ul class="clean-list">
+        <li>Loaded <code>players.csv</code> and selected <code>subscribe</code>, minutes played, and <code>Age</code>.</li>
+        <li>Coerced <code>subscribe</code> to a factor; removed rows with missing values in selected fields.</li>
+        <li>Created a 75/25 train–test split stratified on <code>subscribe</code>.</li>
+      </ul>
+
+      <h3>Exploratory Analysis</h3>
+      <ul class="feature-list">
+        <li>Plotted distributions of minutes played and age.</li>
+        <li>Reviewed the proportion of subscribers vs. non-subscribers (class balance).</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="project-col">
+      <h2>Modeling</h2>
+      <ul class="checklist">
+        <li>Framed the task as K-NN classification with the two predictors.</li>
+        <li>Tuned <em>K</em> over candidate values; selected <strong>K = 21</strong>.</li>
+        <li>Evaluated on the held-out test split; inspected confusion matrix and summary metrics.</li>
+      </ul>
+
+      <h3>Results (Test)</h3>
+      <ul class="feature-list">
+        <li>Accuracy ≈ <strong>75%</strong></li>
+        <li>Precision ≈ <strong>100%</strong> (skewed toward positives)</li>
+        <li>Recall ≈ <strong>8%</strong> (very low)</li>
+      </ul>
+
+      <h3>Takeaways</h3>
+      <div class="kv">
+        <div><span>Signal</span><b>Minutes & age weakly predictive of subscription</b></div>
+        <div><span>Bias</span><b>Model biased toward predicting “subscribed”</b></div>
+        <div><span>Next</span><b>Add behavior features; address class imbalance</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="gallery-title">Screenshots</h2>
+  <div class="project-gallery">
+    <figure class="shot">
+      <img src="{% static 'webapp/images/gamer-plot1.png' %}" alt="KNN classification project visuals">
+      <figcaption>Relationship between minutes played and age to subscription</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="{% static 'webapp/images/gamer-plot2.png' %}" alt="KNN classification project visuals">
+      <figcaption>Accuracy VS K value</figcaption>
+    </figure>
+  </div>
+</section>
+
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+{% block content %}
+
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>LLM Preference Classification — TF-IDF + Logistic Regression</h1>
+    <p class="project-subtitle">
+      Kaggle “LLM Classification (Finetuning)” entry. Two TF–IDF baselines (full-text vs. separated fields) with
+      multinomial Logistic Regression, ensembled by probability averaging to predict A / B / tie.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Data Science & Modeling</span>
+      <span class="chip">Stack: Python, pandas, NumPy, scikit-learn, SciPy</span>
+      <span class="chip">Task: 3-class classification (A / B / tie)</span>
+      <span class="chip">CV: 5-fold (log-loss & accuracy)</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      {# Optional: link your public Kaggle notebook if available #}
+      <a class="btn primary" href="https://www.kaggle.com/code/jseo079/llm-classification-tf-idf" target="_blank" rel="noopener">View Kaggle Notebook</a>
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <!-- LEFT -->
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        The dataset provides pairwise responses (<em>response_a</em>, <em>response_b</em>) to a <em>prompt</em> and labels which model’s
+        response wins (A, B) or if they tie. I constructed a 3-class target from the competition’s one-hot labels and trained two
+        Logistic Regression baselines on TF–IDF features, then averaged their predicted probabilities for the final submission.
+      </p>
+
+      <h3>Data & Labels</h3>
+      <ul class="clean-list">
+        <li>Loaded <code>train.csv</code> and <code>test.csv</code>.</li>
+        <li>Constructed target <code>winner ∈ {A, B, tie}</code> from <code>winner_model_a</code>/<code>winner_model_b</code>.</li>
+        <li>Mapped labels via <code>{A:0, B:1, tie:2}</code> for modeling.</li>
+      </ul>
+
+      <h3>Features</h3>
+      <ul class="feature-list">
+        <li><strong>Model A — Full text:</strong> TF–IDF (1–2 grams, 20k max features) on
+          <code>prompt + "[SEP]" + response_a + " [VS] " + response_b</code>.</li>
+        <li><strong>Model B — Separated + difference:</strong> TF–IDF (1–2 grams, 10k each) on <code>prompt</code>, <code>response_a</code>, <code>response_b</code>;
+          built a difference block <code>(respA − respB)</code>; final design matrix was <code>[prompt | respA | respB | diff]</code> (≈40k cols).</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="project-col">
+      <h2>Modeling</h2>
+      <ul class="checklist">
+        <li>Classifier: <strong>LogisticRegression</strong> (multinomial, <code>solver='saga'</code>, <code>C=1.0</code>, <code>max_iter=500</code>).</li>
+        <li>CV: 5-fold on training set with <strong>log-loss</strong> and <strong>accuracy</strong>.</li>
+        <li>Trained both models on full train; predicted test probabilities; <strong>ensembled</strong> by averaging.</li>
+        <li>Built submission with columns: <code>winner_model_a</code>, <code>winner_model_b</code>, <code>winner_model_tied</code>.</li>
+      </ul>
+
+      <h3>Cross-Validation (Train)</h3>
+      <ul class="feature-list">
+        <li>Model A (Full-text): log-loss <strong>1.1143 ± 0.0028</strong>, accuracy <strong>0.3791 ± 0.0049</strong>.</li>
+        <li>Model B (Separated + diff): log-loss <strong>1.1812 ± 0.0045</strong>, accuracy <strong>0.4212 ± 0.0042</strong>.</li>
+        <li>Ensemble: average of Model A & B probabilities.</li>
+      </ul>
+
+      <h3>Notes</h3>
+      <div class="kv">
+        <div><span>Vectorizer</span><b>TF–IDF, 1–2 grams, strip accents</b></div>
+        <div><span>Design</span><b>Full-text vs. separated + diff features</b></div>
+        <div><span>Output</span><b>3-way class probabilities</b></div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

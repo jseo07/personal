@@ -1,0 +1,185 @@
+:root { --nav-h: 64px; }
+.snap-section { position: relative; z-index: 0; }
+
+/* The snap section offsets for fixed navbar */
+#contact.snap-section { scroll-margin-top: var(--nav-h); }
+
+
+/* CONTACT — fully scoped to #contact to avoid collisions */
+#contact .contact-section {
+  max-width: none;                /* let inner control width */
+  margin: 0;
+  padding: 0;                     /* we’ll pad the inner */
+  display: flex !important;
+  flex-direction: column;
+  min-height: 100dvh;             /* mobile-safe full height */
+  align-items: center;            /* horizontal centering */
+  justify-content: flex-start;    /* start at top */
+
+}
+
+#contact .contact-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding: calc(var(--nav-h) + 16px) 1.25rem 3rem; /* avoid nav overlap */
+  margin-block: auto;             /* center vertically IF there’s free space */
+}
+
+
+#contact .contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;  /* icon | form */
+  gap: 2.5rem;
+  align-items: center;               /* vertical alignment inside the row */
+}
+
+/* Left: big icon + note */
+#contact .contact-visual { text-align: center; }
+#contact .contact-icon {
+  width: clamp(60px, 18vw, 120px);
+  height: auto;
+  color: #0073e6;
+  display: block;
+  margin: 0 auto .75rem;
+}
+#contact .contact-note {
+  color: #444;
+  margin: 0 auto;
+  max-width: 32ch;
+}
+
+/* Right: form */
+#contact .contact-title {
+  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+  margin: 0 0 .75rem 0;
+}
+#contact .icon { margin-right: .5rem; }
+
+#contact .contact-form form { display: grid; gap: 1rem; }
+#contact .field { display: grid; gap: .4rem; }
+#contact .field-label { font-weight: 600; color: #222; }
+
+#contact .contact-form input,
+#contact .contact-form textarea {
+  width: 100%;
+  border: 1px solid #d8e0ec;
+  background: #fff;
+  padding: .8rem 1rem;
+  font: inherit;
+  line-height: 1.4;
+  border-radius: 0;                 /* rectangular theme */
+  transition: border-color .2s ease, box-shadow .2s ease;
+  box-sizing: border-box;
+}
+
+#contact .contact-form input:focus,
+#contact .contact-form textarea:focus {
+  outline: none;
+  border-color: #0073e6;
+  box-shadow: 0 0 0 3px rgba(0,115,230,.12);
+}
+
+#contact .contact-submit {
+  background: #0073e6;
+  color: #fff;
+  border: 1px solid #0073e6;
+  padding: .7rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 0;
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+}
+#contact .contact-submit:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.08); }
+#contact .contact-submit:active { transform: none; opacity: .9; }
+
+
+/* 2) Contact section must sit above the previous section and have a solid background */
+#contact.snap-section {
+  z-index: 2;                /* ensure it layers above #hero and others */
+  background: #fff;          /* prevents previous content/bg from showing through */
+  scroll-margin-top: var(--nav-h);
+}
+
+/* 3) Layout: center if short, top-align if tall (no overlapping) */
+#contact .contact-section {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 100dvh;        /* full viewport height (mobile-safe) */
+  align-items: center;       /* horizontal centering */
+  justify-content: flex-start;
+  padding: 0;                /* we’ll pad the inner */
+}
+
+/* Inner controls width + vertical centering (auto margins) */
+#contact .contact-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding: calc(var(--nav-h) + 16px) 1.25rem 3rem;  /* clears fixed navbar */
+  margin-block: auto;        /* centers when space allows; else becomes 0 (top-aligned) */
+}
+
+/* Your grid (kept the same) */
+#contact .contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* If you extend the hero background into the next section via ::before,
+   this ensures it stays UNDER contact content */
+.hero-section::before { z-index: -1; pointer-events: none; }
+
+/* Optional: belt-and-suspenders if any previous section uses high z-index children */
+#contact * { position: relative; }
+:root { --nav-h: 64px; }
+
+/* Portfolio section must be allowed to grow beyond the viewport */
+#portfolio.snap-section {
+  scroll-margin-top: var(--nav-h);
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  height: auto !important;         /* kill any height:100vh inheritance */
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Layout: full-viewport minimum, but can grow naturally */
+#portfolio .section.portfolio-section {
+  display: flex !important;        /* beat any global .section flex/center */
+  flex-direction: column;
+  align-items: center;             /* horizontal centering */
+  justify-content: flex-start;     /* no vertical forcing */
+  min-height: 100dvh;              /* at least the viewport… */
+  height: auto !important;         /* …but NOT capped to it */
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 0;                      /* we’ll pad the inner wrapper */
+}
+
+/* Inner controls width + vertical centering only when there’s space */
+#portfolio .portfolio-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding: calc(var(--nav-h) + 16px) 1.25rem 3rem; /* clears fixed navbar */
+  margin-block: auto;              /* centers vertically if short; top-aligns if tall */
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Ensure the grid/content itself never clips */
+#portfolio .portfolio-grid {
+  overflow: visible;
+}
+
+/* If your hero background spills into the next section, keep it underneath */
+.hero-section::before { z-index: -1; pointer-events: none; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  #contact .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  #contact .contact-visual { order: -1; }                 /* icon above form */
+  #contact .contact-submit { width: 100%; justify-self: stretch; }
+}
