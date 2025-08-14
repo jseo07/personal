@@ -53,3 +53,4 @@ a:hover {
 @media (max-width: 768px) {
   html, body { scroll-snap-type: y proximity; }
 }
+
