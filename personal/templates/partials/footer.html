@@ -1,0 +1,49 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <a class="footer-logo" href="{% url 'index' %}#hero" aria-label="Back to top">
+        Seo<br>Jangwon
+      </a>
+      <p class="footer-tagline">Data Scientist &amp; Developer</p>
+    </div>
+
+    <!-- Nav -->
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="{% url 'index' %}#about">About</a>
+      <a href="{% url 'index' %}#portfolio">Portfolio</a>
+      <a href="{% url 'index' %}#contact">Contact</a>
+      <a href="{% url 'index' %}#hero" class="back-to-top" aria-label="Back to top">↑ Top</a>
+    </nav>
+
+    <!-- Socials -->
+    <div class="footer-socials">
+      <!-- GitHub -->
+      <a href="https://github.com/jseo07" target="_blank" rel="me noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.4.7-4.1-1.6-4.1-1.6-.6-1.5-1.4-1.9-1.4-1.9-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.3 1.8 1.3 1 .1.7-2 .7-2-.8-.1-1.5-.4-2.1-.9-2.4-1.7-1.4-5.2 1.1-5.9-.4-.3-.9-1.2-.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .8 1.3.3 2.2-.1 2.5 2.5.7 3.5 4.2 1.1 5.9-.6.5-1.3.8-2.1.9.1 1.1.1 2.4.1 2.7v4c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/>
+        </svg>
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/in/jangwon-seo-" target="_blank" rel="me noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 0H5a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5h14a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5ZM7.5 20h-3V9h3v11Zm-1.5-12.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4ZM20 20h-3v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20h-3V9H13v1.5h.1a3.2 3.2 0 0 1 2.8-1.5c3 0 3.6 2 3.6 4.6V20Z"/>
+        </svg>
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:jangwonseo079@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20 4H4a2 2 0 0 0-2 2v.2l10 6.3 10-6.3V6a2 2 0 0 0-2-2z"/>
+          <path d="M22 8.3l-10 6.2L2 8.3V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.3z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <small>© {% now "Y" %} Jangwon Seo. All rights reserved.</small>
+  </div>
+</footer>

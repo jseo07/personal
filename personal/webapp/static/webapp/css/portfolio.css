@@ -225,3 +225,12 @@
 @media (prefers-reduced-motion: reduce) {
   .pf-card { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
+
+
+
+/* Tiny end target so you can snap to the bottom of the last section */
+.snap-end { block-size: 1px; scroll-snap-align: end; }
+
+/* Tell the snap container to leave space equal to the footer height */
+:root { --footer-h: 200px; }                 /* adjust to your footer’s real height */
+html, body { scroll-padding-bottom: var(--footer-h); }
