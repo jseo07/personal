@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+  .navbar {
+    transform: translateY(0%);
+    pointer-events: auto;
+  }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>House Price Prediction — Kaggle</h1>
+    <p class="project-subtitle">
+      Regression project for the Kaggle “House Prices: Advanced Regression Techniques.”
+      Compared Linear Regression, Decision Tree, and Random Forest with emphasis on clean preprocessing,
+      sensible feature engineering, and robust evaluation.
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Data Cleaning · Feature Eng · Modeling</span>
+      <span class="chip">Stack: Python (pandas, scikit-learn, numpy, matplotlib)</span>
+      <span class="chip">Data: train.csv / test.csv (Kaggle)</span>
+      <span class="chip">Task: Regression (SalePrice)</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      <a class="btn" href="https://www.kaggle.com/code/jseo079/house-price-prediction" target="_blank" rel="noopener">View on Kaggle</a>
+      {# Optional: host your notebook/export locally too #}
+      {# <a class="btn primary" href="{% static 'webapp/files/house-price-prediction.html' %}" target="_blank" rel="noopener">Notebook</a> #}
+      {# <a class="btn primary" href="{% static 'webapp/files/house-price-prediction.ipynb' %}" download>Download .ipynb</a> #}
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <!-- LEFT -->
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        I built a regression pipeline to predict <code>SalePrice</code> from the Ames housing dataset.
+        The workflow emphasized transparent preprocessing (missing values, encoding), light feature engineering,
+        and fair model comparison using cross-validation.
+      </p>
+
+      <h3>Data Cleaning</h3>
+      <ul class="clean-list">
+        <li>Loaded Kaggle <code>train.csv</code>/<code>test.csv</code>; set <code>SalePrice</code> as target.</li>
+        <li>Handled missing values by semantic rules (e.g., NA = “None” vs. true missing) and simple imputers for numeric.</li>
+        <li>Dropped obvious ID-only fields; trimmed extreme outliers in <code>GrLivArea</code> and <code>SalePrice</code> tails.</li>
+      </ul>
+
+      <h3>Exploratory Analysis</h3>
+      <ul class="feature-list">
+        <li>Inspected target skew; applied <code>log1p(SalePrice)</code> for more Gaussian-like residuals.</li>
+        <li>Visualized key relationships (<code>OverallQual</code>, <code>GrLivArea</code>, <code>TotalBsmtSF</code>).</li>
+        <li>Checked correlation heatmap to guide feature selection and leakage avoidance.</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="project-col">
+      <h2>Modeling</h2>
+      <ul class="checklist">
+        <li>Built a <strong>ColumnTransformer</strong> with: numeric imputation &amp; scaling; categorical imputation &amp; one-hot encoding.</li>
+        <li>Compared models: Linear Regression (baseline), Decision Tree, Random Forest.</li>
+        <li>Tuned key hyperparameters (e.g., <code>n_estimators</code>, <code>max_depth</code>) via grid/random search with CV.</li>
+      </ul>
+
+      <h3>Results (CV / Hold-out)</h3>
+      <ul class="feature-list">
+        <li>Metric: <strong>RMSE on log1p scale</strong> (back-transformed for interpretability).</li>
+        <li>Random Forest performed best among tested models.</li>
+        <li>Kaggle Public Leaderboard (RMSE): <strong>0.16699</strong></li>
+      </ul>
+
+      <h3>Takeaways</h3>
+      <div class="kv">
+        <div><span>Signal</span><b>Quality and size features dominate; log transform stabilizes variance</b></div>
+        <div><span>Prep</span><b>Thoughtful NA handling and one-hot encoding materially improved baseline</b></div>
+        <div><span>Next</span><b>Try regularized linear models (Ridge/Lasso), Gradient Boosting/LightGBM, target-encoding</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="gallery-title">Key Steps</h2>
+  <div class="project-columns">
+    <div class="project-col">
+      <h3>Feature Engineering</h3>
+      <ul class="clean-list">
+        <li>Constructed <code>TotalSF = TotalBsmtSF + 1stFlrSF + 2ndFlrSF</code>.</li>
+        <li>Encoded ordinal categories (e.g., quality/condition) in an ordered fashion where appropriate.</li>
+        <li>Created age features (e.g., <code>HouseAge</code> = <code>YrSold</code> − <code>YearBuilt</code>).</li>
+      </ul>
+    </div>
+    <div class="project-col">
+      <h3>Evaluation Protocol</h3>
+      <ul class="clean-list">
+        <li>5-fold cross-validation on <code>train</code> with consistent preprocessing inside the pipeline.</li>
+        <li>Monitored RMSE/R²; inspected residuals vs. fitted values for bias/heteroscedasticity.</li>
+        <li>Generated Kaggle submission with back-transformed predictions.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+{% endblock %}
+
+{% block extra_js %}{% endblock %}

@@ -11,6 +11,7 @@
                 {% static 'webapp/images/gamer.png' as project5 %}
                 {% static 'webapp/images/tetris.jpg' as project6 %}
                 {% static 'webapp/images/llm.png' as project7 %}
+                {% static 'webapp/images/housing.png' as project8 %}
                 {% url 'sp' as sp %}
                 {% url 'smartmove' as smartmove %}
                 {% url 'gan' as gan %}
@@ -18,6 +19,8 @@
                 {% url 'lstm' as lstm %}
                 {% url 'knn' as knn %}
                 {% url 'tetris' as tetris %}
+                {% url 'housing' as housing %}
+                
             {% include "webapp/partials/portfolio_card.html" with href=sp image=project1 title="SP Development WMS based Web App" tag1="Python" tag2="Django" tag3="Data Extraction"%}
 
             {% include "webapp/partials/portfolio_card.html" with href=smartmove image=project2 title="smartmovebc.ca Web App " tag1="Python" tag2="Django" tag3="Web Dev"%}
@@ -31,6 +34,8 @@
             {% include "webapp/partials/portfolio_card.html" with href=knn image=project5 title="Newsletter Subscription prediction with K-NN Classification" tag1="R" tag2="Data Analysis" %}
 
             {% include "webapp/partials/portfolio_card.html" with href=tetris image=project6 title="Multiplayer Tetris Clone in Java" tag1="Java" tag2="Game" tag3="OOP"%}
+
+            {% include "webapp/partials/portfolio_card.html" with href=housing image=project8 title="Housing Price Prediction with Random Forest" tag1="Python" tag2="EDA" tag3="Kaggle"%}
             
         </div>
     </div>

@@ -11,5 +11,6 @@ urlpatterns = [
     path("llm", views.llm, name="llm"),
     path("knn", views.knn, name="knn"),
     path("tetris", views.tetris, name="tetris"),
+    path("housing", views.housing, name="housing"),
     path("contact", views.contact, name="contact"),
 ]

@@ -31,6 +31,9 @@ def knn(request):
 def tetris(request):
     return render(request, 'webapp/projects/tetris.html')
 
+def housing(request):
+    return render(request, 'webapp/projects/housing.html')
+
 def contact(request):
     if request.method == 'POST':
         email   = request.POST.get('email')
