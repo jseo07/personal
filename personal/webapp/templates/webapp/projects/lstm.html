@@ -2,21 +2,21 @@
 {% load static %}
 {% block extra_css %}
 <style>
-    .navbar {
-        transform: translateY(0%);
-        pointer-events: auto;
-    }
+  .navbar { transform: translateY(0%); pointer-events: auto; }
+  .btn.icon { display:inline-flex; align-items:center; gap:.5rem; }
+  .icon-link { width:1em; height:1em; display:inline-block; background: currentColor; mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M3.9 12a5 5 0 0 1 1.46-3.54l2.12-2.12a5 5 0 0 1 7.07 7.07l-.7.7a1 1 0 1 1-1.41-1.41l.7-.7a3 3 0 1 0-4.24-4.24L6.49 9.31A3 3 0 1 0 10 13a1 1 0 1 1 1.99.2A5 5 0 0 1 3.9 12Zm8.05 0a5 5 0 0 1 1.46-3.54l.7-.7a1 1 0 0 1 1.41 1.41l-.7.7a3 3 0 0 0 4.24 4.24l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7a1 1 0 0 1-1.41-1.41l.7-.7a5 5 0 1 1 7.07 7.07l-2.12 2.12a5 5 0 0 1-7.07-7.07l.7-.7"/></svg>') center / contain no-repeat; }
 </style>
 
 <link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
 {% endblock %}
+
 {% block content %}
 <section class="project-hero">
   <div class="project-hero-inner">
     <h1>Dividend Prediction with LSTM</h1>
     <p class="project-subtitle">
       Forecasting future dividends using a sequence model (LSTM) on historical market data.
-      Emphasis on clean preprocessing and time-aware evaluation.
+      Built with a clean data pipeline, reliable modeling, and an interactive Tableau dashboard.
     </p>
 
     <div class="project-meta">
@@ -28,11 +28,12 @@
 
     <div class="project-links">
       <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
-      <a class="btn primary" href="https://www.kaggle.com/code/jseo079/dividend-prediction-with-lstm" target="_blank" rel="noopener">
+      <a class="btn" href="https://www.kaggle.com/code/jseo079/dividend-prediction-with-lstm" target="_blank" rel="noopener">
         View Kaggle Notebook
       </a>
-      <!-- Optional paper export (if you add the PDF to /static/) -->
-      <!-- <a class="btn" href="{% static 'webapp/ProjectReport.pdf' %}" download="Dividend_LSTM_Report.pdf">Paper</a> -->
+      <a class="btn icon" href="https://public.tableau.com/views/etf-analysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener">
+        <span class="icon-link" aria-hidden="true"></span> Tableau Dashboard
+      </a>
     </div>
   </div>
 </section>
@@ -41,42 +42,42 @@
   <div class="project-columns">
     <!-- LEFT -->
     <div class="project-col">
-      <h2>Overview</h2>
-      <p>
-        Built an end-to-end pipeline that fetches market data, prepares supervised sequences, and trains an LSTM to
-        predict upcoming dividend values. The focus was on reliable preprocessing and honest, time-respecting validation.
-      </p>
-
-      <h3>Data Cleaning</h3>
+      <h2>Data Pipeline</h2>
       <ul class="clean-list">
-        <li>Loaded price/dividend data with <code>yfinance</code>; unified to a single datetime index.</li>
-        <li>Handled missing values and ensured the series were sorted and aligned by date.</li>
-        <li>Constructed the target dividend series and filtered to the relevant ticker/time span.</li>
+        <li>Fetched price/dividend data via <code>yfinance</code> and unified it to a consistent datetime index.</li>
+        <li>Handled missing values and ensured sorted, aligned series per ticker.</li>
+        <li>Prepared supervised sequences with a look-back window → next dividend format.</li>
+        <li>Split data by time (train, validation, test) to prevent leakage.</li>
       </ul>
 
-      <h3>Exploratory Analysis</h3>
-      <ul class="feature-list">
-        <li>Plotted dividend history and matching price series to understand payout patterns.</li>
-        <li>Reviewed basic descriptive statistics and missing-value patterns.</li>
+      <h2>LSTM Model</h2>
+      <ul class="checklist">
+        <li>Implemented an LSTM in Keras to predict future dividends.</li>
+        <li>Tuned hyperparameters with Adam optimizer and early stopping.</li>
+        <li>Evaluated predictions on held-out time segments with clear visualizations.</li>
       </ul>
     </div>
 
     <!-- RIGHT -->
     <div class="project-col">
-      <h2>Modeling</h2>
-      <ul class="checklist">
-        <li>Framed the problem as supervised sequences (look-back window → next dividend value).</li>
-        <li>Created training samples by sliding windows over the historical series.</li>
-        <li>Split data by time (train → validation/test) with no shuffling.</li>
-        <li>Implemented an LSTM in Keras and trained on the prepared sequences.</li>
-        <li>Evaluated on a held-out time segment and visualized predictions vs actuals.</li>
+      <h2>Deployment</h2>
+      <p>
+        The trained model was deployed for reuse within my data pipeline, enabling reproducible inference and integration into visualizations.
+      </p>
+
+      <h2>Tableau Dashboard</h2>
+      <ul class="feature-list">
+        <li>Interactive ticker selection to explore multiple ETFs/stocks.</li>
+        <li>KPIs: latest predicted dividend, year-over-year change, trailing 12-month totals.</li>
+        <li>Timeline view overlaying historical and LSTM-predicted dividends.</li>
+        <li>Dynamic filters and tooltips for exploring results.</li>
+        <li>Export option for downloading filtered datasets.</li>
       </ul>
 
-      <h3>What I Focused On</h3>
-      <div class="kv">
-        <div><span>Reliability</span><b>Clean alignment and consistent indexing</b></div>
-        <div><span>Reproducibility</span><b>Deterministic splits and saved seeds</b></div>
-        <div><span>Readability</span><b>Clear plots comparing predicted vs. true dividends</b></div>
+      <div class="project-links" style="margin-top:12px;">
+        <a class="btn icon" href="https://public.tableau.com/app/profile/yourlink" target="_blank" rel="noopener">
+          <span class="icon-link" aria-hidden="true"></span> Open Tableau Dashboard
+        </a>
       </div>
     </div>
   </div>
@@ -88,11 +89,12 @@
       <figcaption>Predictions vs. actual dividends over time</figcaption>
     </figure>
     <figure class="shot">
-      <img src="{% static 'webapp/images/lstm2.png' %}" alt="LSTM predictions vs actual dividends">
-      <figcaption>Historical and Predicted Dividends of MSFT</figcaption>
+      <img src="{% static 'webapp/images/tableau-capture.png' %}" alt="Tableau Dashboard">
+      <figcaption>Tableau Dashboard</figcaption>
     </figure>
+    <!-- Add a Tableau screenshot if available -->
   </div>
 </section>
 {% endblock %}
-{% block extra_js %}
-{% endblock %}
+
+{% block extra_js %}{% endblock %}
