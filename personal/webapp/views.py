@@ -4,10 +4,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.utils.http import url_has_allowed_host_and_scheme
-
+import requests
 
 def index(request):
-    return render(request, 'webapp/index.html')
+    return render(request, 'webapp/index.html', {"RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY})
 
 
 def sp(request):
@@ -36,26 +36,40 @@ def housing(request):
 
 def contact(request):
     if request.method == 'POST':
-        email   = request.POST.get('email')
+        email = request.POST.get('email')
         message = request.POST.get('message')
+        recaptcha_response = request.POST.get('g-recaptcha-response')
 
-        subject = f'New contact form submission from {email}'
-        body = (
-            f"Email: {email}\n"
-            f"Message:\n{message}"
-        )
+        # ✅ Verify reCAPTCHA with Google
+        data = {
+            'secret': settings.RECAPTCHA_PRIVATE_KEY,  # Add this in settings.py
+            'response': recaptcha_response
+        }
+        verify = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = verify.json()
 
-        send_mail(
-            subject,
-            body,
-            settings.DEFAULT_FROM_EMAIL,
-            [settings.CONTACT_RECIPIENT_EMAIL],
-            fail_silently=False,
-        )
+        if result.get('success'):
+            # ✅ CAPTCHA passed → proceed to send email
+            subject = f'New contact form submission from {email}'
+            body = f"Email: {email}\nMessage:\n{message}"
 
-        messages.success(request, "Thank you, message has been sent.")
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.CONTACT_RECIPIENT_EMAIL],
+                fail_silently=False,
+            )
+
+            messages.success(request, "✅ Thank you! Your message has been sent successfully.")
+        else:
+            # ❌ CAPTCHA failed → show error
+            messages.error(request, "Please confirm you’re not a robot before submitting.")
+
+        # Redirect safely
         next_url = request.POST.get('next', '/')
         if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
             next_url = '/'
         return redirect(next_url)
+
     return render(request, "webapp/index.html")
