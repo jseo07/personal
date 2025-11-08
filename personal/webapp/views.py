@@ -67,9 +67,6 @@ def contact(request):
             messages.error(request, "Please confirm you’re not a robot before submitting.")
 
         # Redirect safely
-        next_url = request.POST.get('next', '/')
-        if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
-            next_url = '/'
-        return redirect(next_url)
+        return redirect('/#contact')
 
     return render(request, "webapp/index.html")
