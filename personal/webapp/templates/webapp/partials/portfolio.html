@@ -12,6 +12,7 @@
                 {% static 'webapp/images/tetris.jpg' as project6 %}
                 {% static 'webapp/images/llm.png' as project7 %}
                 {% static 'webapp/images/housing.png' as project8 %}
+                {% static 'webapp/images/coffee-dashboard-1.png' as project9 %}
                 {% url 'sp' as sp %}
                 {% url 'smartmove' as smartmove %}
                 {% url 'gan' as gan %}
@@ -20,7 +21,10 @@
                 {% url 'knn' as knn %}
                 {% url 'tetris' as tetris %}
                 {% url 'housing' as housing %}
+                {% url 'coffee' as coffee %}
                 
+            {% include "webapp/partials/portfolio_card.html" with href=coffee image=project9 title="Coffee Quality & Specialty Classification" tag1="Python" tag2="EDA" tag3="Classification"%}
+
             {% include "webapp/partials/portfolio_card.html" with href=sp image=project1 title="SP Development WMS based Web App" tag1="Python" tag2="Django" tag3="Data Extraction"%}
 
             {% include "webapp/partials/portfolio_card.html" with href=smartmove image=project2 title="smartmovebc.ca Web App " tag1="Python" tag2="Django" tag3="Web Dev"%}

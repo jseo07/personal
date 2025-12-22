@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .navbar {
+        transform: translateY(0%);
+        pointer-events: auto;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'webapp/css/project.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <h1>Coffee Quality & Specialty Classification</h1>
+    <p class="project-subtitle">
+      End-to-end data science project analyzing what drives <strong>specialty coffee quality</strong>
+      using Coffee Quality Institute (CQI) data. The project combines exploratory data analysis,
+      statistical testing, metadata-only machine learning classification, SHAP interpretability,
+      and an interactive Tableau dashboard. <br>
+      <em>Models intentionally exclude sensory scores to reflect real-world pre-cupping decision making.</em>
+    </p>
+
+    <div class="project-meta">
+      <span class="chip">Role: Data Science & Analysis</span>
+      <span class="chip">Stack: Python, scikit-learn, SHAP</span>
+      <span class="chip">Viz: Tableau</span>
+    </div>
+
+    <div class="project-links">
+      <a class="btn" href="{% url 'index' %}#portfolio">← Back to Portfolio</a>
+      <a class="btn primary" href="https://public.tableau.com/views/CoffeeQualityInsightsDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener">Live Dashboard</a>
+      <a class="btn" href="https://github.com/jseo07/coffee_quality" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section class="project-body section">
+  <div class="project-columns">
+    <div class="project-col">
+      <h2>Overview</h2>
+      <p>
+        Specialty coffee is formally defined by cupping scores, but in practice many decisions
+        must be made <em>before</em> sensory evaluation. This project investigates whether
+        metadata such as <strong>origin, altitude, variety, and processing method</strong>
+        can meaningfully explain or predict coffee quality.
+      </p>
+      <p>
+        Using CQI review data, I first explored quality distributions and group differences,
+        then framed specialty classification as a binary machine learning problem
+        (≥ 80 points vs &lt; 80 points), carefully avoiding information leakage.
+      </p>
+
+      <h3>Key Questions</h3>
+      <ul class="feature-list">
+        <li>☕ What patterns exist in coffee quality across countries and varieties?</li>
+        <li>⛰️ Does altitude meaningfully relate to quality scores?</li>
+        <li>🤖 Can metadata alone help identify specialty coffee?</li>
+      </ul>
+    </div>
+
+    <div class="project-col">
+      <h2>My Contributions</h2>
+      <ul class="checklist">
+        <li>Cleaned and standardized raw CQI data (altitude parsing, missing values, encoding).</li>
+        <li>Performed EDA with distributions, boxplots, and correlation analysis.</li>
+        <li>Conducted ANOVA tests to evaluate country- and variety-level quality differences.</li>
+        <li>Built and compared multiple classifiers (Logistic Regression, Random Forest, SVC).</li>
+        <li>Tuned the best model with cross-validation and custom probability thresholds.</li>
+        <li>Applied SHAP to interpret feature influence and model behavior.</li>
+        <li>Designed and published an interactive Tableau dashboard for exploration.</li>
+      </ul>
+
+      <h3>Tech Notes</h3>
+      <div class="kv">
+        <div><span>Target</span><b>Specialty (Total Cup Points ≥ 80)</b></div>
+        <div><span>Features</span><b>Origin, Altitude, Variety, Processing</b></div>
+        <div><span>Best Model</span><b>Random Forest (tuned)</b></div>
+        <div><span>Metric</span><b>ROC AUC, Precision–Recall</b></div>
+      </div>
+    </div>
+  </div>
+
+
+  <h2 class="gallery-title">Key Findings</h2>
+  <ul class="feature-list">
+    <li>📊 Most coffees cluster between 80–90 points, creating class imbalance.</li>
+    <li>🌍 Country and variety show statistically significant mean differences, with overlap.</li>
+    <li>⛰️ Altitude is positively associated with quality, but not determinative.</li>
+    <li>🧠 Metadata enables screening-level prediction, not definitive classification.</li>
+  </ul>
+
+  <h2 class="gallery-title">Screenshots</h2>
+  <div class="project-gallery">
+    <figure class="shot">
+      <img src="{% static 'webapp/images/coffee-dashboard-1.png' %}" alt="Coffee quality dashboard overview">
+      <figcaption>Interactive Tableau dashboard overview</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="{% static 'webapp/images/coffee-dashboard-2.png' %}" alt="Classification model shap plot">
+      <figcaption>Classification model shap plot</figcaption>
+    </figure>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

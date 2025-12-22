@@ -34,6 +34,9 @@ def tetris(request):
 def housing(request):
     return render(request, 'webapp/projects/housing.html')
 
+def coffee(request):
+    return render(request, 'webapp/projects/coffee.html')
+
 def contact(request):
     if request.method == 'POST':
         email = request.POST.get('email')
